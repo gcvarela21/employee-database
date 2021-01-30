@@ -1,8 +1,6 @@
 // These are Require Dependencies
 const mysql = require("mysql");
 const express = require("express");
-const fs = require("fs");
-const path = require('path');
 
 // Initializing the express app
 const app = express();
@@ -35,17 +33,7 @@ var connection = mysql.createConnection({
   });
 
   ///// ABOVE connect to my work bench sql data base ////////////////
-  
-  require('');
-
-
-
-
-
-
-
-
-
+require("./inquire.js");
 
 // Setup listener and error catch (needs to be at the end of the js file)
 app.listen(PORT, function(error) {

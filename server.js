@@ -1,18 +1,7 @@
 // These are Require Dependencies
 const mysql = require("mysql");
-const express = require("express");
-
-// Initializing the express app
-const app = express();
-const PORT = 3000;
-
-// Sets up the Express app to handle data parsing
-// needed for PUT POST requests
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
-//// include routes for local host to access on the browser
-//require("")(app);
+var inquirer = require("inquirer");
+var Table = require('cli-table');
 
 ///// BELOW connect to my work bench sql data base ////////////////
 var connection = mysql.createConnection({
@@ -20,7 +9,7 @@ var connection = mysql.createConnection({
     port: 3306,
     user: "root",
     password: "password",
-    database: "task_saver_db"
+    database: "work_force_db"
   });
   
   connection.connect(function(err) {
@@ -33,14 +22,128 @@ var connection = mysql.createConnection({
   });
 
   ///// ABOVE connect to my work bench sql data base ////////////////
-require("./inquire.js");
 
-// Setup listener and error catch (needs to be at the end of the js file)
-app.listen(PORT, function(error) {
-    if (error) {
-        console.log('Something has gone wrong', error)
-    } else {
-        console.log("app/express is listening on PORT: " + PORT);
-    }
-}); 
+
+//////////////////////////////////////////////////////////////////////////////////////////
+///////// Below is the Inquirer at Work  ///////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+function launchWorkForce() {
+  inquirer
+    .prompt({
+      name: "action",
+      type: "rawlist",
+      message: "What would you like to do?",
+      choices: [
+        "View Work Force",
+        "Start Over"
+      ]
+    })
+    .then(function(answer) {
+      switch (answer.action) {
+      case "View Work Force":
+        viewWorkForce();
+        break;
+        case "Start Over":
+          launchWorkForce();
+          break;
+      }
+    });
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+function viewWorkForce() {
+  inquirer
+    .prompt({
+      name: "action",
+      type: "rawlist",
+      message: "What would you like view?",
+      choices: [
+        "View Everything",
+        "Start Over"
+      ]
+    })
+    .then(function(answer) {
+      switch (answer.action) {
+      case "View Everything":
+          viewAll();
+          break;
+
+      case "Start Over":
+          launchWorkForce();
+          break;
+      }
+    });
+}
+//////////////////////////////////////////////////////////////////////////////////////////
+          //"Edit Work Force"
+      // case "Edit Work Force":
+      //   editWorkForce();
+      //   break;
+
+        // "View Work Force by Department",
+        // "View Work Force by Role",
+        // "View Work Force by Employees",
+
+      // case "View Work Force by Department":
+      //     viewDepartment();
+      //     break;
+
+      // case "View Work Force by Role":
+      //     viewRoles();
+      //     break;
+      
+      // case  "View Work Force by Employees":
+      //     viewEmployees();
+      //     break;
+
+//////////////////////////////////////////////////////////////////////////////////////////
+function viewAll() {
+connection.query("SELECT * FROM staff", function (err, res) {
+
+  var table = new Table({
+      //You can name these table heads chicken if you'd like. They are simply the headers for a table we're putting our data in
+      head: ["id", "department_id", "department_name", "role_id", "title", "salary", "employee_id", "first_name", "last_name"],
+      //These are just the width of the columns. Only mess with these if you want to change the cosmetics of our response
+      colWidths: [5, 5, 20, 5, 20, 10, 10, 10,10]
+  });
+
+  // table is an Array, so you can `push`, `unshift`, `splice`
+  for (var i = 0; i < res.length; i++) {
+      table.push(
+          [res[i].id, res[i].department_id, res[i].department_name, res[i].role_id, res[i].title, res[i].salary, res[i].employee_id, res[i].first_name, res[i].last_name],
+      );
+  }
+  console.log(table.toString());
+  // launchWorkForce();
+});
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+function viewDepartment() {
+
+}
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+function viewRoles() {
+
+}
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+function viewEmployees() {
+
+}
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+
+//  SELECT * FROM work_force_db.staff;
+// SELECT * FROM work_force_db.departments;
+// SELECT * FROM work_force_db.roles;
+// SELECT * FROM  department;
+// SELECT * FROM  roles;
+// SELECT * FROM  staff;
+
+launchWorkForce();
+
 

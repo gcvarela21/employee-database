@@ -1,24 +1,39 @@
--- create DB, Import work_force.csv
-
 DROP DATABASE IF EXISTS Work_Force_DB;
+CREATE DATABASE Work_Force_DB;
+USE Work_Force_DB;
 
--- Create the database wish_list and specified it for use.
-CREATE DATABASE  Work_Force_DB;
+CREATE TABLE departments (
+  id int NOT NULL,
+  department_id int NOT NULL,
+  department_name varchar(30) NOT NULL,
+  PRIMARY KEY (id)
+);
 
-USE   Work_Force_DB;
+CREATE TABLE roles (
+  id int NOT NULL,
+  department_id int NOT NULL,
+  role_id int NOT NULL,
+  title varchar(30) NOT NULL,
+  salary decimal(10, 2) NOT NULL,
+  PRIMARY KEY (id)
+);
 
--- Create the table tasks.
-CREATE TABLE Work_Force (
-  ref int NOT NULL,
+CREATE TABLE staff (
+  id int NOT NULL,
   department_id int NOT NULL,
   department_name varchar(30) NOT NULL,
   role_id int NOT NULL,
   title varchar(30) NOT NULL,
-  salary decimal(6, 2) NOT NULL,
-  employee_ID int NOT NULL,
+  salary decimal(10, 2) NOT NULL,
+  employee_id int NOT NULL,
   first_name varchar(30) NOT NULL,
   last_name varchar(30) NOT NULL,
-  PRIMARY KEY (ref)
+  PRIMARY KEY (id)
 );
 
-SELECT * FROM Work_Force;
+
+SELECT * FROM  department;
+SELECT * FROM  roles;
+SELECT * FROM  staff;
+
+

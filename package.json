@@ -1,18 +1,25 @@
 {
-  "name": "test",
+  "name": "work_force.db",
   "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
+  "description": "Manage your Company's Employees using Node, Inquirer, and MySQL\r [npm mysql DELETE](https://www.w3schools.com/nodejs/nodejs_mysql_delete.asp)\r [npm mysql INSERT](https://www.w3schools.com/nodejs/nodejs_mysql_insert.asp)\r [npm mysql JOIN](https://www.w3schools.com/nodejs/nodejs_mysql_join.asp)",
+  "main": "inquire.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gcvarela21/work_force.db.git"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gcvarela21/work_force.db/issues"
+  },
+  "homepage": "https://github.com/gcvarela21/work_force.db#readme",
   "dependencies": {
-    "console.table": "^0.10.0",
-    "express": "^4.17.1",
+    "cli-table": "^0.3.4",
     "inquirer": "^7.3.3",
     "mysql": "^2.18.1"
   }
